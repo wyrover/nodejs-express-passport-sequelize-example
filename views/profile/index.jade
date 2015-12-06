@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    h4 Profile page
+    p.lead This your profile.
+    p.span Username: #{user.username}
+    p.span Registration date: #{user.createdAt}
+
+    a.btn.btn-primary(href='/') Return

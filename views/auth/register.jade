@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    h4 Create an account
+    p.lead Enter your email/phone or press social authentication button to sign up.
+    br
+    form(action='' method='post' role='form')
+        fieldset
+            .form-group
+                label(for='username') Username
+                input.form-control(type='text', name="username", placeholder='Enter Username')
+            .form-group
+                label(for='password') Password
+                input.form-control(type='password', name="password", placeholder='Password')
+        a(href='/') Cancel
+        &nbsp;
+        button.btn.btn-default(type='submit') Register

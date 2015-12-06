@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    if (!user)
+        a(href="/auth/login") Login
+        br
+        a(href="/auth/register") Register
+    if (user)
+        p You are currently logged in as #[strong #{user.username}]
+        a(href="/profile") Profile
+        br
+        a(href="/auth/logout") Logout
+
+    h1= title
+    p Welcome to #{title}
