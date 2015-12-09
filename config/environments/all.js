@@ -2,6 +2,9 @@
 
 module.exports = {
     name: 'myapp',
+    database: {
+        migrationStorageTableName: 'migrations'
+    },
     session: {
         cookieName: 'session'
     },
@@ -9,6 +12,6 @@ module.exports = {
         loginPage: '/auth/login',
         registrationPage: '/auth/register',
         logout: '/auth/logout',
-        redirectAfterLogin: '/profile',
+        redirectAfterLogin: '/profile'
     }
 };

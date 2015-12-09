@@ -18,7 +18,7 @@ router.post('/', function(req, res, next) {
     //console.log('registering user');
     User.register(User.build({username: req.body.username}), req.body.password, function(err) {
         if (err) {
-            console.log('error while user register!', err);
+            //console.log('error while user register!', err);
             next(err);
             return;
         }

@@ -1,21 +1,22 @@
 'use strict';
 
+//process.env.NODE_ENV = process.env.NODE_ENV || 'test';
+
 var app      = require('../../app');
 var config   = app.locals;
-var Promise  = require('lie');
 var expect   = require('expect.js');
 var request  = require('supertest');
+var testUtil = require('../util.js');
 
 describe('authentication and authorization', function () {
     beforeEach(function () {
-        this.models = require('../../models');
+        var models = require('../../models');
+        this.User = models.User;
+        
         var passportLocalSequelize = require('passport-local-sequelize');
-        passportLocalSequelize.attachToUser(this.models.User);
+        passportLocalSequelize.attachToUser(this.User);
 
-        return Promise.all([
-//            this.models.Task.destroy({ truncate: true }),
-            this.models.User.destroy({ truncate: true, force: true })
-        ]);
+        return testUtil.applyMigrations(models);
     });
 
     it('loads correctly', function (done) {
@@ -29,7 +30,7 @@ describe('authentication and authorization', function () {
     it('login works', function (done) {
         var username = 'johndoe';
         var password = '123456';
-        this.models.User.register(this.models.User.build({ username: username }), password, function (err, user) {
+        this.User.register(this.User.build({ username: username }), password, function (err, user) {
             if (err) {
                 done(err);
                 return;
@@ -49,9 +50,13 @@ describe('authentication and authorization', function () {
                     })
                     .expect(302)
                     .expect('Location', config.paths.redirectAfterLogin)
-                    .end(done);
-            });
-        });
+                    .end(function() {
+                        this.User.destroy({ truncate: true, force: true }).then(function() {
+                            done();
+                        });
+                    }.bind(this));
+            }.bind(this));
+        }.bind(this));
     });
     
     it('registration works', function (done) {
@@ -72,8 +77,12 @@ describe('authentication and authorization', function () {
                 })
                 .expect(302)
                 .expect('Location', config.paths.redirectAfterLogin)
-                .end(done);
-        });
+                .end(function() {
+                    this.User.destroy({ truncate: true, force: true }).then(function() {
+                        done();
+                    });
+                }.bind(this));
+        }.bind(this));
     });
     
 });

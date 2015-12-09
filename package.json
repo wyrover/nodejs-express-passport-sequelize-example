@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "start:debug": "node-inspector --web-host=10.0.0.1 --cli",
-    "start:dev": "DEBUG=* nodemon --ignore test/ --debug bin/www",
+    "start:dev": "DEBUG=* nodemon --ignore test/ --debug",
     "start": "node bin/www",
     "test": "npm run test-unit && npm run test-integration",
-    "test-unit": "mocha test/unit/*.test.js",
-    "test-integration": "mocha test/integration/*.test.js"
+    "test-unit": "NODE_ENV=test mocha test/unit/*.test.js",
+    "test-integration": "NODE_ENV=test mocha test/integration/*.test.js",
+    "cover": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha test/*/*.test.js  -- -R spec",
+    "cover-codeclimate": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | node node_modules/codeclimate-test-reporter/bin/codeclimate.js",
+    "cover-coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | node node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -26,9 +29,14 @@
     "sqlite3": "~3.1.1"
   },
   "devDependencies": {
-    "lie": "~3.0.1",
+    "bluebird": "~3.0.6",
+    "codeclimate-test-reporter": "~0.1.1",
+    "coveralls": "~2.11.4",
     "expect.js": "~0.3.1",
+    "istanbul": "~0.4.1",
     "mocha": "~2.2.5",
-    "supertest": "~1.0.1"
+    "mocha-lcov-reporter": "~1.0.0",
+    "supertest": "~1.0.1",
+    "umzug": "~1.7.1"
   }
 }

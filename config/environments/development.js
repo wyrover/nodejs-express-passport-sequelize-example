@@ -1,7 +1,10 @@
 'use strict';
 
 module.exports = {
-    database: require('../config.json').development,
+    database: {
+        dialect: 'sqlite',
+        storage: 'data/database_development.sqlite'
+    },
     session: {
         secret: ['keyboard cat'],
     }

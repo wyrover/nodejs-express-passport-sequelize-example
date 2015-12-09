@@ -1,17 +1,19 @@
 'use strict';
 
 var expect = require('expect.js');
+var testUtil = require('../util.js');
 
 describe('models/user', function () {
     beforeEach(function () {
-        this.User = require('../../models').User;
+        var models = require('../../models');
+        this.User = models.User;
 
         var passportLocalSequelize = require('passport-local-sequelize');
         passportLocalSequelize.attachToUser(this.User);
 
-        return this.User.destroy({ truncate: true, force: true });
+        return testUtil.applyMigrations(models);
     });
-
+    
     describe('create', function () {
         it('creates a user', function (done) {
             return this.User.register(this.User.build({ username: 'johndoe' }), '123456', function (err, user) {
@@ -20,8 +22,10 @@ describe('models/user', function () {
                     return;
                 }
                 expect(user.username).to.equal('johndoe');
-                done();
-            });
+                this.User.destroy({ truncate: true, force: true }).then(function() {
+                    done();
+                });
+            }.bind(this));
         });
     });
 });
