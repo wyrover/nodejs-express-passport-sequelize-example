@@ -8,18 +8,21 @@ var router = express.Router({
 var passport = require('passport');
 var redirectAfterLogin = require('../../middleware/redirect-after-login');
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res/*, next */) {
     res.render('auth/login');
 });
   
 router.post('/', function(req, res, next) {
-    passport.authenticate('local')(req, res, function(err) {
+    passport.authenticate('local', {
+        failWithError: true
+    })(req, res, function(err) {
         if (err) {
+            if ('AuthenticationError' == err.name) {
+                res.status(400);
+                res.render('auth/login', { errorMsg: 'Invalid username or password' });
+                return;
+            }
             next(err);
-            return;
-        }
-        if ( ! req.user) {
-            res.render('auth/login', { errorMsg: 'Invalid username or password' });
             return;
         }
         redirectAfterLogin(req, res, next);

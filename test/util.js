@@ -3,7 +3,7 @@
 var Umzug = require('umzug');
 var Bluebird  = require('bluebird');
 
-function applyMigrations(db) {
+function getMigrator(db) {
     var Sequelize = db.Sequelize;
     var sequelize = db.sequelize;
     var migrator = new Umzug({
@@ -28,10 +28,10 @@ function applyMigrations(db) {
     });
 
     return sequelize.authenticate().then(function () {
-        return migrator.up();
+        return migrator;
     });
 }
 
 module.exports = {
-    applyMigrations: applyMigrations
+    getMigrator: getMigrator
 };

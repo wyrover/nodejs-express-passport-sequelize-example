@@ -5,7 +5,7 @@ block content
     p.lead Enter your username and password to log in.
     br
     if errorMsg
-        p= errorMsg
+        p(style='color: red;')= errorMsg
     form(action='' method='post' role='form')
         fieldset
             .form-group

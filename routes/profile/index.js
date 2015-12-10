@@ -6,7 +6,7 @@ var router = express.Router({
     strict: true
 });
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res/*, next*/) {
     res.render('profile/index');
 });
 

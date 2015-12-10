@@ -1,7 +1,7 @@
 Myapp
 =====
 
-[![Build Status](https://api.travis-ci.org/rafis/nodejs-express-passport-sequelize-example.svg?branch=master)](http://travis-ci.org/rafis/nodejs-express-passport-sequelize-example) [![Test Coverage](https://codeclimate.com/github/rafis/nodejs-express-passport-sequelize-example/badges/coverage.svg)](https://codeclimate.com/github/rafis/nodejs-express-passport-sequelize-example/coverage)
+[![Build Status](https://api.travis-ci.org/rafis/nodejs-express-passport-sequelize-example.svg?branch=master)](http://travis-ci.org/rafis/nodejs-express-passport-sequelize-example) [![Test Coverage](https://codeclimate.com/github/rafis/nodejs-express-passport-sequelize-example/badges/coverage.svg)](https://codeclimate.com/github/rafis/nodejs-express-passport-sequelize-example/coverage) [![Dependency Status](https://david-dm.org/rafis/nodejs-express-passport-sequelize-example.svg)](https://david-dm.org/rafis/nodejs-express-passport-sequelize-example)
 
 Developing web-backend on PHP, Ruby, Java or C#? Want to touch truly reactive technology with fastest growing community? This example is for you, just download zip and start hacking.
 
@@ -17,4 +17,4 @@ Featuring:
 * Minimal dependency count
 * No CSS framework (but I'm looking into getbase.org)
 * Simple user registration without email verification
-* Throughoutly tested. Coverage: 80%
+* Throughoutly tested. Coverage: 90%

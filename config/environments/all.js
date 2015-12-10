@@ -1,7 +1,9 @@
 'use strict';
 
 module.exports = {
-    name: 'myapp',
+    app: {
+        name: 'MyApp'
+    },
     database: {
         migrationStorageTableName: 'migrations'
     },

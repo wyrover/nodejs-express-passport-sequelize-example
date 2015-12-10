@@ -4,14 +4,27 @@ var expect = require('expect.js');
 var testUtil = require('../util.js');
 
 describe('models/user', function () {
+
+    before('apply migrations', function() {
+        var models = require('../../models');
+        return testUtil.getMigrator(models).then(function(migrator) {
+            return migrator.up();
+        });
+    });
+
+    after('undo migrations', function() {
+        var models = require('../../models');
+        return testUtil.getMigrator(models).then(function(migrator) {
+            return migrator.down();
+        });
+    });
+    
     beforeEach(function () {
         var models = require('../../models');
         this.User = models.User;
 
         var passportLocalSequelize = require('passport-local-sequelize');
         passportLocalSequelize.attachToUser(this.User);
-
-        return testUtil.applyMigrations(models);
     });
     
     describe('create', function () {
