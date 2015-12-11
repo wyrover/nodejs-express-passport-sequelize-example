@@ -326,7 +326,7 @@ describe('authentication', function () {
                         username: username,
                         password: password
                     })
-                    .expect(500)
+                    .expect(400)
                     .expect('Content-Type', new RegExp('^text\/html'))
                     .end(function(err/*, res */) {
                         if (err) {

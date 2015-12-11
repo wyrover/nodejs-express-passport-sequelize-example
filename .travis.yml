@@ -9,4 +9,4 @@ node_js:
 sudo: false
 script: travis_retry npm test
 
-after_success: npm run cover-codeclimate
+after_success: npm run cover:codeclimate

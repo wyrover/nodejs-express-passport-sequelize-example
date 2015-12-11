@@ -17,6 +17,11 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res, next) {
     User.register(User.build({username: req.body.username}), req.body.password, function(err) {
         if (err) {
+            if (/^(User already exists with |Password argument not set!)/.test(err.message)) {
+                res.status(400);
+                res.render('auth/register', { errorMsg: err.message });
+                return;
+            }
             next(err);
             return;
         }

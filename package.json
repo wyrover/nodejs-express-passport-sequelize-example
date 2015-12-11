@@ -9,16 +9,16 @@
   "scripts": {
     "preinstall": "npm install semver && node -e \"if ( ! require('semver').satisfies(process.versions.node, require('./package.json').engines.node) && ! require('semver').satisfies(process.versions.node, require('./package.json').engines.iojs) ) { console.error('Unsupported nodejs version'); process.exit(231); }\"",
     "start": "node bin/www",
-    "start:dev": "DEBUG=* nodemon --debug --ignore test/ bin/www",
+    "start:dev": "node scripts/start/dev.js",
     "start:debug": "node-inspector --web-host=10.0.0.1 --cli",
     "start:debug:specifictest": "node --debug node_modules/mocha/bin/_mocha --timeout 0",
     "start:debug:specifictest:integration:auth": "npm run start:debug:specifictest test/integration/auth.test.js",
-    "test": "NODE_ENV=test mocha test/*/*.test.js",
-    "test-unit": "NODE_ENV=test mocha test/unit/*.test.js",
-    "test-integration": "NODE_ENV=test mocha test/integration/*.test.js",
-    "cover": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha test/*/*.test.js  -- -R spec",
-    "cover-codeclimate": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | node node_modules/codeclimate-test-reporter/bin/codeclimate.js",
-    "cover-coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | node node_modules/coveralls/bin/coveralls.js"
+    "test": "node scripts/test.js",
+    "test-unit": "node scripts/test-unit.js",
+    "test-integration": "node scripts/test-integration.js",
+    "cover": "node scripts/cover.js",
+    "cover:codeclimate": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | node node_modules/codeclimate-test-reporter/bin/codeclimate.js",
+    "cover:coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | node node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
     "body-parser": "~1.14.1",
