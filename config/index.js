@@ -15,7 +15,7 @@ var extend = (function() {
                 if (hasOwnProperty.call(source, key)) {
                     var value = source[key];
                     if (typeof value === 'object' && typeof target[key] === 'object') {
-                        target[key] = extend({}, target[key], value);
+                        target[key] = extend(Object.create(null), target[key], value);
                     } else {
                         target[key] = value;
                     }
@@ -27,4 +27,4 @@ var extend = (function() {
     };
 })();
 
-module.exports = extend({}, allConfig, environmentConfig);
+module.exports = extend(Object.create(null), allConfig, environmentConfig);

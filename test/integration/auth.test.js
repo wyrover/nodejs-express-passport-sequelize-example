@@ -257,8 +257,9 @@ describe('authentication', function () {
         }.bind(this));
     });
 
-    it('shows errors on issues', function (done) {
+    it('shows errors on system issues', function (done) {
         var models = require('../../models');
+        // TODO: We imitiate issues by undoing migrations, maybe better solution exists?
         testUtil.getMigrator(models).then(function(migrator) {
             migrator.down().then(function() {
                 var agent = request(app);
@@ -300,7 +301,39 @@ describe('authentication', function () {
             });
         });
     });
-                                
+
+    it('shows errors on fatal error when user tries to registers', function (done) {
+        // TODO: Monkey patching is not good, maybe better solution exists?
+        var passportLocalStrategy = require('passport')._strategies['local'];
+        var originalPassportLocalAuthenticate = passportLocalStrategy.authenticate;
+        passportLocalStrategy.authenticate = function(/*req, options*/) {
+            this.error(new Error('Fatal error'));
+        };
+        var username = 'johndoe';
+        var password = '123456';
+        var agent = request(app);
+        agent
+            .post(config.paths.registrationPage)
+            .type('form')
+            .send({
+                username: username,
+                password: password
+            })
+            .expect(500)
+            .end(function(err/*, res */) {
+                passportLocalStrategy.authenticate = originalPassportLocalAuthenticate;
+                if (err) {
+                    done(err);
+                    return;
+                }
+                this.User.findOne({ where: { username: username } }).then(function(user) {
+                    user.destroy({ force: true }).then(function() {
+                        done();
+                    });
+                });
+            }.bind(this));
+    });
+    
     it('shows errors if a user already registered', function (done) {
         var username = 'johndoe';
         var password = '123456';

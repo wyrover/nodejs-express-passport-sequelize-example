@@ -51,9 +51,9 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: true,
         paranoid: true,
         classMethods: {
-//            associate: function(models) {
-//                User.hasManyThrough(models.Role, models.User_Role);
-//            }
+            associate: function(models) {
+//                User.hasManyThrough(models.Achievement, models.User_Achievement);
+            }
         }
     });
 

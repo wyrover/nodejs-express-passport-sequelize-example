@@ -21,7 +21,9 @@ module.exports = function(app) {
         resave: false,
         saveUninitialized: false
     }));
-    if ('development' == env) {
+
+    // On production we should use nginx, as it is more specialized for serving static files than express.static
+    if ('production' != env) {
         app.use(express.static(path.join(__dirname, '../../public')));
     }
 };
