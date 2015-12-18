@@ -5,8 +5,6 @@ var path = require('path');
 var connectEnsureLogin = require('connect-ensure-login');
 
 module.exports = function(app) {
-    app.use(express.static(path.join(__dirname, 'public')));
-
     var config = app.locals;
     var routesBasePath = '../../routes/';
     var ensureLoggedIn = connectEnsureLogin.ensureLoggedIn({
@@ -35,7 +33,7 @@ module.exports = function(app) {
     // development error handler
     // will print stacktrace
     /* istanbul ignore if */
-    if (app.get('env') === 'development') {
+    if ('development' === app.get('env')) {
         app.use(function(err, req, res, next) {
             res.status(err.status || 500);
             res.render('error', {

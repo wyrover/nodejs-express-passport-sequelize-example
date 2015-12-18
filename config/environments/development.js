@@ -7,5 +7,6 @@ module.exports = {
     },
     session: {
         secret: ['keyboard cat'],
+        store: 'memory'
     }
 };

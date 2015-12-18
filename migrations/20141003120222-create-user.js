@@ -50,7 +50,7 @@ module.exports = {
                     field: 'deleted_at'
                 }
             });
-        },
+    },
 
     down: function(queryInterface, Sequelize) {
         return queryInterface

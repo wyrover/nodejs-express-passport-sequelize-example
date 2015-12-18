@@ -1,7 +1,7 @@
 'use strict';
 
 var Umzug = require('umzug');
-var Bluebird  = require('bluebird');
+var Bluebird = require('bluebird');
 
 function getMigrator(db) {
     var Sequelize = db.Sequelize;
@@ -27,8 +27,13 @@ function getMigrator(db) {
         }
     });
 
-    return sequelize.authenticate().then(function () {
-        return migrator;
+    // Convert `Bluebird` promise to native `Promise` for `finally()`
+    return new Promise(function(resolve, reject) {
+        sequelize.authenticate().then(function () {
+            resolve(migrator);
+        }, function(err) {
+            reject(err);
+        });
     });
 }
 

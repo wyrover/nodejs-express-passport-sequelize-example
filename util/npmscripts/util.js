@@ -21,7 +21,7 @@ function spawnCommand(command, args, opt) {
     });
 
     return child;
-};
+}
 
 module.exports = {
     spawnCommand: spawnCommand

@@ -27,18 +27,20 @@ describe('models/user', function () {
         passportLocalSequelize.attachToUser(this.User);
     });
     
-    describe('create', function () {
-        it('creates a user', function (done) {
-            return this.User.register(this.User.build({ username: 'johndoe' }), '123456', function (err, user) {
+    it('creates a user', function () {
+        var User = this.User;
+        return (new Promise(function(resolve, reject) {
+            User.register(User.build({ username: 'johndoe' }), '123456', function (err, user) {
                 if (err) {
-                    done(err);
+                    reject(err);
                     return;
                 }
                 expect(user.username).to.equal('johndoe');
-                this.User.destroy({ truncate: true, force: true }).then(function() {
-                    done();
-                });
-            }.bind(this));
+                resolve(user);
+            });
+        })).then(function(user) {
+            return user.destroy({ force: true });
         });
     });
+    
 });

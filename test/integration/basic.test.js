@@ -5,20 +5,44 @@ var request  = require('supertest-session');
 
 describe('basic functions', function () {
 
-    it('loads correctly', function (done) {
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect('Content-Type', new RegExp('^text\/html'))
-            .end(done);
+    before(function() {
+        this.validHtmlContentType = new RegExp('^text\/html(?:; charset\=utf\-8)?$');
     });
 
-    it('handles wrong requests correctly', function (done) {
-        request(app)
-            .get('/asdfgh')
-            .expect(404)
-            .expect('Content-Type', new RegExp('^text\/html'))
-            .end(done);
+    it('loads correctly', function () {
+        var validHtmlContentType = this.validHtmlContentType;
+        return new Promise(function(resolve, reject) {
+            var agent = request(app);
+            agent
+                .get('/')
+                .expect(200)
+                .expect('Content-Type', validHtmlContentType)
+                .end(function(err) {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve(agent);
+                });
+        });
+    });
+
+    it('handles wrong requests correctly', function () {
+        var validHtmlContentType = this.validHtmlContentType;
+        return new Promise(function(resolve, reject) {
+            var agent = request(app);
+            agent
+                .get('/asdfgh')
+                .expect(404)
+                .expect('Content-Type', validHtmlContentType)
+                .end(function(err) {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve(agent);
+                });
+        });
     });
 
 });

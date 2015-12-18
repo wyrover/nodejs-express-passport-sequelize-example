@@ -7,5 +7,10 @@ module.exports = {
     },
     session: {
         secret: ['keyboard cat'],
+        store: 'redis',
+        storeConfig: {
+            host: 'localhost',
+            port: 6379
+        }
     }
 };
